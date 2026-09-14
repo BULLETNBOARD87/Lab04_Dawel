@@ -1,0 +1,16 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Sep 14, 2026, 8:53:45 AM
+    Author     : 2548213
+*/
+.root {
+ -fx-font-family: serif;
+}
+.button {
+-fx-background-color: orange;
+ -fx-font-size: 18px;
+}
+
