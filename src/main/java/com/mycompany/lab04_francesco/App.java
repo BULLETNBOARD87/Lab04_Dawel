@@ -22,15 +22,20 @@ public class App extends Application {
     
     @Override
     public void start(Stage stage) {
+        
         Button calcButton = new Button("Calculate Reimbursment");
         GridPane gridPane = new GridPane();
          
-        String[] labels = {"Trip Days: ", "Airfare Fees: ", "Miles Driven: ", "Lodging Fees: "};
+        String[] labels = {"Trip Days: ", "Airfare Fees: ", "Miles Driven: ", "Lodging Fees: ", "Rental Fees: ", "Taxi Charges:", "Parking Fees: ", "Allowed Fees: "};
         TextInputControl[] fields = {
             new TextField(),   
             new TextField(),  
             new TextField(), 
             new TextField(), 
+            new TextField(), 
+            new TextField(), 
+            new TextField(),
+            new TextField(),
         };
         
         for (int i = 0; i < labels.length; i++) {
@@ -45,38 +50,81 @@ public class App extends Application {
         
         Button carBoolean = new Button("Was a Private Car Used?");
         Label carLabel = new Label("No");
+        Label reimbursement = new Label("0");
+        Label totalText = new Label("Total expenses of trip:");
+        Label totalNum = new Label("0");
+        Label excessText = new Label("Total excess:");
+        Label excessNum = new Label("0");
+        Label savedText = new Label("Total saved:");
+        Label savedNum = new Label("0");
+        
+        fields[4].setDisable(false);
+        fields[5].setDisable(false);
+        fields[6].setDisable(true);
         
         carBoolean.setOnAction(event -> {
             if (carTracker == false) {
                 carLabel.setText("Yes");
                 carTracker = true;
+                fields[4].setDisable(true);
+                fields[5].setDisable(true);
+                fields[6].setDisable(false);
             } else {
                 carLabel.setText("No");
                 carTracker = false;
+                fields[4].setDisable(false);
+                fields[5].setDisable(false);
+                fields[6].setDisable(true);
             }
             
+        });
+        
+        calcButton.setOnAction(event -> {
+            int tripDays = Integer.parseInt(fields[0].getText().trim());
+            double airfareFees = Double.parseDouble(fields[1].getText().trim());
+            double milesDriven = Double.parseDouble(fields[2].getText().trim());
+            double lodgingFees = Double.parseDouble(fields[3].getText().trim());
+            double rentalFees = Double.parseDouble(fields[4].getText().trim());
+            double taxiCharges = Double.parseDouble(fields[5].getText().trim());
+            double parkingFees = Double.parseDouble(fields[6].getText().trim());
+            double allowedFees = Double.parseDouble(fields[7].getText().trim());
+            
+            if (carTracker == false) {
+               reimbursement.setText(String.valueOf(Reimbursment.calcReimbursement(tripDays, milesDriven, carTracker, 0.0 ,taxiCharges, lodgingFees)));
+            } else {
+               reimbursement.setText(String.valueOf(Reimbursment.calcReimbursement(tripDays, milesDriven, carTracker, parkingFees,0.0, lodgingFees)));
+            }
             
         });
+        
+        
        
-        gridPane.add(carBoolean, 0, 5);
-        gridPane.add(carLabel, 1, 5);
-        gridPane.add(calcButton, 0, 8);
+        gridPane.add(carBoolean, 0, 9);
+        gridPane.add(carLabel, 1, 9);
+        gridPane.add(calcButton, 0, 10);
+        gridPane.add(reimbursement, 1, 10);
+        gridPane.add(totalText, 0, 11);
+        gridPane.add(totalNum, 1, 11);
+        gridPane.add(excessText, 0, 12);
+        gridPane.add(excessNum, 1, 12);
+        gridPane.add(savedText, 0, 13);
+        gridPane.add(savedNum, 1, 13);
         calcButton.setDisable(true);
         
-        Scene scene = new Scene(gridPane, 640, 480);
+        Scene scene = new Scene(gridPane, 300, 300);
         scene.getStylesheets().add("styles.css");
         stage.setScene(scene);
         stage.show();
     }
     
     /**
-     * Placeholder
-     * @param fields Placeholder
-     * @param registerBtn  Placeholder
+     * Updates the state of the button that calculates the reimbursement.
+     * @param fields the fields to check for.
+     * @param calcButton the button to update.
      */
     private void updateRegisterButtonState(TextInputControl[] fields, Button calcButton) {
         for (TextInputControl field : fields) {
-            if (field.getText() == null || field.getText().trim().isEmpty()) {
+            if ( (field.getText() == null || field.getText().trim().isEmpty()) && !field.isDisabled()) {
                 calcButton.setDisable(true);
                 return;
             }
