@@ -9,8 +9,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .root {
  -fx-font-family: serif;
 }
-.button {
--fx-background-color: orange;
- -fx-font-size: 18px;
-}
 
