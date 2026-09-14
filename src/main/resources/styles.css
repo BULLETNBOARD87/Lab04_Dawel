@@ -7,6 +7,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : 2548213
 */
 .root {
- -fx-font-family: serif;
+ -fx-font-family: cursive;
+ -fx-font-style: italic;
+ -fx-background-color: red;
+}
+
+.text-field {
+    -fx-background-color: yellowgreen;
 }
 

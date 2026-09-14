@@ -91,9 +91,32 @@ public class App extends Application {
             
             if (carTracker == false) {
                reimbursement.setText(String.valueOf(Reimbursment.calcReimbursement(tripDays, milesDriven, carTracker, 0.0 ,taxiCharges, lodgingFees)));
+               totalNum.setText(String.valueOf(airfareFees + lodgingFees + taxiCharges));
+               
+               if ((airfareFees + lodgingFees + taxiCharges) > allowedFees) {
+                   excessNum.setText(String.valueOf((airfareFees + lodgingFees + taxiCharges) - allowedFees));
+                   savedNum.setText("0");
+                   
+               } else {
+                   savedNum.setText(String.valueOf( allowedFees - (airfareFees + lodgingFees + taxiCharges)));
+                   excessNum.setText("0");
+               }
+              
             } else {
                reimbursement.setText(String.valueOf(Reimbursment.calcReimbursement(tripDays, milesDriven, carTracker, parkingFees,0.0, lodgingFees)));
+               totalNum.setText(String.valueOf(airfareFees + lodgingFees + parkingFees + rentalFees));
+               
+               if ((airfareFees + lodgingFees + parkingFees + rentalFees) > allowedFees) {
+                   excessNum.setText(String.valueOf((airfareFees + lodgingFees + parkingFees + rentalFees) - allowedFees));
+                   savedNum.setText("0");
+                   
+               } else {
+                   savedNum.setText(String.valueOf( allowedFees - (airfareFees + lodgingFees + parkingFees + rentalFees)));
+                   excessNum.setText("0");
+               }
             }
+            
+            
             
         });
         
